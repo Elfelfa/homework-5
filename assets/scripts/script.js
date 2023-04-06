@@ -2,12 +2,22 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-    $('#currentDay').text(dayjs().format('DD/MM/YYYY h:mm:ss A'));  
+    $('#currentDay').text(dayjs().format('DD/MM/YYYY h:mm:ss A'))  
     setInterval(function(){
         $('#currentDay').text(dayjs().format('DD/MM/YYYY h:mm:ss A'));
     }, 1000);
 
     setColors();
+    loadContents();
+
+    var saveButtons = document.querySelectorAll('.saveBtn');
+
+    saveButtons.forEach(btn => {
+        btn.addEventListener('click', function(event) {
+            event.preventDefault();
+            saveContents();
+        });
+    });
 });
 
 
@@ -18,11 +28,11 @@ function setColors()
     timeBlocks.forEach(block => {
         var timeID = block.getAttribute('id').split('-');
 
-        if(parseInt(timeID[1]) < dayjs().$H)
+        if(parseInt(timeID[1]) < dayjs('4/1/2022 10:00:00 AM').$H)
         {
             block.classList.add('past');
         }
-        else if(parseInt(timeID[1]) > dayjs().$H)
+        else if(parseInt(timeID[1]) > dayjs('4/1/2022 10:00:00 AM').$H)
         {
             block.classList.add('future');
         }
@@ -31,5 +41,31 @@ function setColors()
             block.classList.add('present');
         }
         
+    });
+}
+
+function saveContents()
+{
+    localStorage.clear();
+
+    var descriptions = document.querySelectorAll('.description');
+    var descText = [];
+
+    descriptions.forEach(element => {
+        descText.push(element.value);
+    });
+
+    localStorage.setItem('data', JSON.stringify(descText));
+}
+
+function loadContents()
+{
+    var data = JSON.parse(localStorage.getItem('data'));
+    var descriptions = document.querySelectorAll('.description');
+    var i = 0;
+
+    data.forEach(text => {
+        descriptions[i].innerHTML = text;
+        i++;
     });
 }
