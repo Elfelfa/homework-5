@@ -64,7 +64,7 @@ function loadContents()
     var descriptions = document.querySelectorAll('.description');
     var i = 0;
 
-    if (data.length > 0)
+    if (typeof data !== 'undefined' && data !== null)
     {
         data.forEach(text => {
             descriptions[i].innerHTML = text;
