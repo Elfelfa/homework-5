@@ -28,11 +28,11 @@ function setColors()
     timeBlocks.forEach(block => {
         var timeID = block.getAttribute('id').split('-');
 
-        if(parseInt(timeID[1]) < dayjs('4/1/2022 10:00:00 AM').$H)
+        if(parseInt(timeID[1]) < dayjs().$H)
         {
             block.classList.add('past');
         }
-        else if(parseInt(timeID[1]) > dayjs('4/1/2022 10:00:00 AM').$H)
+        else if(parseInt(timeID[1]) > dayjs().$H)
         {
             block.classList.add('future');
         }
